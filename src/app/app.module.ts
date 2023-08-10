@@ -8,17 +8,30 @@ import { ConditionsComponent } from './conditions/conditions.component';
 import { NgOptimizedImage } from '@angular/common';
 import { ForecastComponent } from './forecast/forecast.component';
 import { AlertsComponent } from './alerts/alerts.component';
+import { RainfallComponent } from './rainfall/rainfall.component';
+import { MetadataComponent } from './metadata/metadata.component';
+import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
+import { environment } from '../environments/environment.development';
 
 @NgModule({
-    declarations: [RootComponent, SidebarComponent, RadarComponent],
+    declarations: [
         RootComponent,
         SidebarComponent,
         RadarComponent,
         LocationComponent,
         ConditionsComponent,
+        ForecastComponent,
         AlertsComponent,
         RainfallComponent,
-    imports: [BrowserModule, NgOptimizedImage],
+        MetadataComponent,
+    ],
+    imports: [
+        BrowserModule,
+        NgOptimizedImage,
+        NgxMapboxGLModule.withConfig({
+            accessToken: environment.mapboxApiKey,
+        }),
+    ],
     providers: [],
     bootstrap: [RootComponent],
 })
