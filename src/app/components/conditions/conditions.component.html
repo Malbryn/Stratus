@@ -1,18 +1,24 @@
 <div class="sidebar-card">
     <div class="flex flex-col gap-3 px-3">
         <div class="flex justify-center">
-            <h3 class="text-xl">Broken clouds</h3>
+            <h3 class="text-xl">
+                {{ currentWeather()?.condition?.text ?? '-' }}
+            </h3>
         </div>
         <div class="flex items-center justify-center gap-6">
             <div>
                 <img
-                    ngSrc="../../../assets/icons/partly-cloudy-1.svg"
+                    *ngIf="conditionIconPath() !== ''"
+                    [ngSrc]="
+                        '../../../assets/icons/' + conditionIconPath() + '.svg'
+                    "
                     height="56"
                     width="56"
+                    alt="condition"
                 />
             </div>
             <div>
-                <h1 class="text-5xl">23 °C</h1>
+                <h1 class="text-5xl">{{ roundedTemperature() ?? '-' }} °C</h1>
             </div>
         </div>
         <div class="flex justify-between gap-3 py-1 text-16">
@@ -23,10 +29,11 @@
                             ngSrc="../../../assets/icons/wind.svg"
                             height="20"
                             width="20"
+                            alt="wind speed and direction"
                         />
                     </div>
                     <div>
-                        <span>10 km/h NNE</span>
+                        <span>{{ windString() }}</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
@@ -35,10 +42,11 @@
                             ngSrc="../../../assets/icons/compass-n.svg"
                             height="20"
                             width="20"
+                            alt="pressure"
                         />
                     </div>
                     <div>
-                        <span>1013 hPa</span>
+                        <span>{{ currentWeather()?.pressure ?? '-' }} hPa</span>
                     </div>
                 </div>
             </div>
@@ -49,10 +57,11 @@
                             ngSrc="../../../assets/icons/drop-percentage.svg"
                             height="20"
                             width="20"
+                            alt="humidity"
                         />
                     </div>
                     <div>
-                        <span>75%</span>
+                        <span>{{ currentWeather()?.humidity ?? '-' }}%</span>
                     </div>
                 </div>
                 <div class="flex items-center gap-3">
@@ -61,10 +70,16 @@
                             ngSrc="../../../assets/icons/drops.svg"
                             height="20"
                             width="20"
+                            alt="precipitation"
                         />
                     </div>
                     <div>
-                        <span>0 mm</span>
+                        <span
+                            >{{
+                                currentWeather()?.precipitation ?? '-'
+                            }}
+                            mm</span
+                        >
                     </div>
                 </div>
             </div>

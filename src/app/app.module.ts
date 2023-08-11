@@ -12,6 +12,10 @@ import { RainfallComponent } from './components/rainfall/rainfall.component';
 import { MetadataComponent } from './components/metadata/metadata.component';
 import { NgxMapboxGLModule } from 'ngx-mapbox-gl';
 import { environment } from '../environments/environment.development';
+import { WeatherService } from './services/weather.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ApiService } from './services/api.service';
+import { LocationService } from './services/location.service';
 
 @NgModule({
     declarations: [
@@ -27,12 +31,13 @@ import { environment } from '../environments/environment.development';
     ],
     imports: [
         BrowserModule,
+        HttpClientModule,
         NgOptimizedImage,
         NgxMapboxGLModule.withConfig({
             accessToken: environment.mapboxApiKey,
         }),
     ],
-    providers: [],
+    providers: [ApiService, LocationService, WeatherService],
     bootstrap: [RootComponent],
 })
 export class AppModule {}
