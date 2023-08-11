@@ -1,6 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import * as mapboxgl from 'mapbox-gl';
+import { Component, inject, OnInit } from '@angular/core';
+import * as MapboxGL from 'mapbox-gl';
+import { LngLatLike } from 'mapbox-gl';
+import * as MapboxSearchBox from '@mapbox/mapbox-gl-geocoder';
 import { environment } from '../../../environments/environment';
+import { LocationService } from '../../services/location.service';
+import { Location } from '../../types/location';
 
 @Component({
     selector: 'radar',
@@ -8,16 +12,49 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./radar.component.css'],
 })
 export class RadarComponent implements OnInit {
-    map!: mapboxgl.Map;
+    private locationService: LocationService = inject(LocationService);
 
     ngOnInit() {
-        this.map = new mapboxgl.Map({
-            container: 'map',
+        // Create map
+        const defaultCoordinates: LngLatLike = [
+            this.locationService.currentLocation().latitude,
+            this.locationService.currentLocation().longitude,
+        ];
+
+        const map: MapboxGL.Map = new MapboxGL.Map({
+            container: 'mapbox',
             style: 'mapbox://styles/mapbox/dark-v11',
-            center: [19.04, 47.49],
+            center: defaultCoordinates,
             zoom: 10,
-            maxZoom: 12,
+            maxZoom: 11,
             accessToken: environment.mapboxApiKey,
         });
+
+        // Create search box
+        const search: MapboxSearchBox = new MapboxSearchBox({
+            accessToken: environment.mapboxApiKey,
+            types: 'place',
+            marker: false,
+        });
+
+        search.on('result', (event) => {
+            const location: Location =
+                this.createLocationFromSearchEvent(event);
+
+            this.locationService.setNewLocation(location);
+        });
+
+        map.addControl(search);
+    }
+
+    private createLocationFromSearchEvent(event: any): Location {
+        const result = event['result'];
+
+        return {
+            shortName: result['text'],
+            longName: result['place_name'],
+            latitude: result['center'][0],
+            longitude: result['center'][1],
+        };
     }
 }

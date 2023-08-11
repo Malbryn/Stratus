@@ -21,7 +21,8 @@
                         "assets": ["src/favicon.ico", "src/assets"],
                         "styles": [
                             "src/styles.css",
-                            "mapbox-gl/dist/mapbox-gl.css"
+                            "mapbox-gl/dist/mapbox-gl.css",
+                            "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
                         ],
                         "scripts": []
                     },
