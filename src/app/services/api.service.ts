@@ -3,6 +3,8 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { CurrentWeather } from '../types/current-weather';
+import { WeatherMapDto } from '../types/weather-map-dto';
+import { RadarMap } from '../types/radar-map';
 
 @Injectable()
 export class ApiService {
@@ -10,12 +12,20 @@ export class ApiService {
 
     private readonly CURRENT_WEATHER_PATH = 'current.json';
 
+    // TODO: convert to DTO
     getCurrentWeather(location: string): Observable<CurrentWeather> {
-        const url: string = `${environment.weatherApiUrl}${this.CURRENT_WEATHER_PATH}?key=${environment.weatherApiKey}&q=${location}`;
+        const baseUrl: string = `${environment.weatherApiUrl}${this.CURRENT_WEATHER_PATH}`;
+        const url: string = `${baseUrl}?key=${environment.weatherApiKey}&q=${location}`;
 
         return this.httpClient
             .get(url)
             .pipe(map((data) => this.parseCurrentWeatherData(data)));
+    }
+
+    getWeatherMap(): Observable<RadarMap> {
+        return this.httpClient
+            .get<WeatherMapDto>(environment.rainViewerApiUrl)
+            .pipe(map((weatherMap) => this.parseWeatherMapData(weatherMap)));
     }
 
     private parseCurrentWeatherData(obj: any): CurrentWeather {
@@ -43,5 +53,14 @@ export class ApiService {
                 code: current['condition']['code'],
             },
         } as CurrentWeather;
+    }
+
+    private parseWeatherMapData(weatherMap: WeatherMapDto): RadarMap {
+        return {
+            generated: weatherMap.generated,
+            host: weatherMap.host,
+            currentTileIndex: 0,
+            tiles: [...weatherMap.radar.past, ...weatherMap.radar.nowcast],
+        } as RadarMap;
     }
 }

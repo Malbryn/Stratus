@@ -16,6 +16,8 @@ import { WeatherService } from './services/weather.service';
 import { HttpClientModule } from '@angular/common/http';
 import { ApiService } from './services/api.service';
 import { LocationService } from './services/location.service';
+import { RadarControlComponent } from './components/radar-control/radar-control.component';
+import { RadarService } from './services/radar.service';
 
 @NgModule({
     declarations: [
@@ -28,6 +30,7 @@ import { LocationService } from './services/location.service';
         AlertsComponent,
         RainfallComponent,
         MetadataComponent,
+        RadarControlComponent,
     ],
     imports: [
         BrowserModule,
@@ -37,7 +40,7 @@ import { LocationService } from './services/location.service';
             accessToken: environment.mapboxApiKey,
         }),
     ],
-    providers: [ApiService, LocationService, WeatherService],
+    providers: [ApiService, LocationService, RadarService, WeatherService],
     bootstrap: [RootComponent],
 })
 export class AppModule {}

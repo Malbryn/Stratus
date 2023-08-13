@@ -1,0 +1,51 @@
+<div
+    class="absolute bottom-2 left-1/2 flex gap-4 rounded-3xl bg-primary-300 p-3"
+>
+    <div class="flex justify-center gap-2">
+        <div>
+            <button (click)="backward()">
+                <img
+                    ngSrc="../../../assets/icons/control/backward.svg"
+                    width="24"
+                    height="24"
+                    alt="backward"
+                />
+            </button>
+        </div>
+        <div *ngIf="!isPlaying; else pauseButton">
+            <button (click)="play()">
+                <img
+                    ngSrc="../../../assets/icons/control/play.svg"
+                    width="24"
+                    height="24"
+                    alt="play"
+                />
+            </button>
+        </div>
+        <ng-template #pauseButton>
+            <div>
+                <button (click)="pause()">
+                    <img
+                        ngSrc="../../../assets/icons/control/pause.svg"
+                        width="24"
+                        height="24"
+                        alt="pause"
+                    />
+                </button>
+            </div>
+        </ng-template>
+        <div>
+            <button (click)="forward()">
+                <img
+                    ngSrc="../../../assets/icons/control/forward.svg"
+                    width="24"
+                    height="24"
+                    alt="forward"
+                />
+            </button>
+        </div>
+    </div>
+    <div>
+        <span>{{ currentTime() }} [tileIndex: {{ currentTileIndex() }}]</span>
+    </div>
+</div>

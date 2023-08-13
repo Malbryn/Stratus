@@ -1,0 +1,11 @@
+export enum RadarColours {
+    BLACK_AND_WHITE,
+    ORIGINAL,
+    UNIVERSAL_BLUE,
+    TITAN,
+    THE_WEATHER_CHANNEL,
+    METEORED,
+    NEXRAD_LEVEL_III,
+    RAINBOW_SELEX_IS,
+    DARK_SKY,
+}
