@@ -19,7 +19,7 @@ export class RadarComponent implements OnInit {
 
     DEFAULT_LAYER_INDEX = 12;
 
-    mapbox!: MapboxGL.Map;
+    mapbox: MapboxGL.Map | undefined;
     radarMap: Signal<RadarMap | null> = this.radarService.radarMap;
     currentTileIndex: Signal<number> = this.radarService.currentTileIndex;
 
@@ -32,8 +32,8 @@ export class RadarComponent implements OnInit {
     ngOnInit() {
         // Create map
         const defaultCoordinates: LngLatLike = [
-            this.locationService.currentLocation().latitude,
             this.locationService.currentLocation().longitude,
+            this.locationService.currentLocation().latitude,
         ];
 
         this.mapbox = new MapboxGL.Map({
@@ -70,13 +70,15 @@ export class RadarComponent implements OnInit {
         return {
             shortName: result['text'],
             longName: result['place_name'],
-            latitude: result['center'][0],
-            longitude: result['center'][1],
+            latitude: result['center'][1],
+            longitude: result['center'][0],
         };
     }
 
     private addRadarLayer(): void {
         this.radarMap()?.tiles.forEach((tile, index) => {
+            if (!this.mapbox) return;
+
             this.mapbox.addLayer({
                 id: `radar_${index}`,
                 type: 'raster',
@@ -105,6 +107,8 @@ export class RadarComponent implements OnInit {
     }
 
     private refreshRadarOverlay(newIndex: number): void {
+        if (!this.mapbox) return;
+
         this.mapbox.setLayoutProperty(
             `radar_${newIndex}`,
             'visibility',

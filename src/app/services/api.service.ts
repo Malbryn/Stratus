@@ -13,9 +13,12 @@ export class ApiService {
     private readonly CURRENT_WEATHER_PATH = 'current.json';
 
     // TODO: convert to DTO
-    getCurrentWeather(location: string): Observable<CurrentWeather> {
+    getCurrentWeather(location: {
+        latitude: number;
+        longitude: number;
+    }): Observable<CurrentWeather> {
         const baseUrl: string = `${environment.weatherApiUrl}${this.CURRENT_WEATHER_PATH}`;
-        const url: string = `${baseUrl}?key=${environment.weatherApiKey}&q=${location}`;
+        const url: string = `${baseUrl}?key=${environment.weatherApiKey}&q=${location.latitude},${location.longitude}`;
 
         return this.httpClient
             .get(url)

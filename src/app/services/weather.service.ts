@@ -27,9 +27,10 @@ export class WeatherService {
     constructor() {
         effect(async () =>
             this.apiService
-                .getCurrentWeather(
-                    this.locationService.currentLocation().shortName
-                )
+                .getCurrentWeather({
+                    latitude: this.locationService.currentLocation().latitude,
+                    longitude: this.locationService.currentLocation().longitude,
+                })
                 .subscribe({
                     next: (currentWeather) =>
                         this.state.update((state) => ({

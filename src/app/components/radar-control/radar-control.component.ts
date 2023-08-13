@@ -1,12 +1,4 @@
-import {
-    Component,
-    computed,
-    inject,
-    Input,
-    OnInit,
-    Signal,
-} from '@angular/core';
-import * as MapboxGL from 'mapbox-gl';
+import { Component, computed, inject, OnInit, Signal } from '@angular/core';
 import { RadarMap } from '../../types/radar-map';
 import { RadarService } from '../../services/radar.service';
 
@@ -24,8 +16,6 @@ export class RadarControlComponent implements OnInit {
 
     isPlaying: boolean = false;
     timeoutId: number | undefined;
-
-    @Input() mapbox!: MapboxGL.Map;
 
     ngOnInit() {}
 
