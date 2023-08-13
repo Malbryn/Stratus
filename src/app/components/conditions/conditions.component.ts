@@ -16,7 +16,7 @@ export class ConditionsComponent implements OnInit {
 
     windString!: Signal<string>;
     roundedTemperature!: Signal<number | undefined>;
-    conditionIconPath!: Signal<string>;
+    conditionIcon!: Signal<string>;
 
     ngOnInit() {
         this.windString = computed(() =>
@@ -30,7 +30,7 @@ export class ConditionsComponent implements OnInit {
             this.createRoundedTemperature(this.currentWeather()?.temp)
         );
 
-        this.conditionIconPath = computed(() =>
+        this.conditionIcon = computed(() =>
             this.getConditionIcon(
                 this.currentWeather()?.condition.code,
                 this.currentWeather()?.isDay
