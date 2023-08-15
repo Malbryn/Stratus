@@ -2,11 +2,11 @@ export type CurrentWeather = {
     lastUpdatedEpoch: number;
     lastUpdated: string;
     isDay: boolean;
-    temp: number;
+    temperature: number;
     feelsLike: number;
     wind: number;
     windGust: number;
-    windDir: string;
+    windDirection: string;
     windDegree: number;
     pressure: number;
     precipitation: number;

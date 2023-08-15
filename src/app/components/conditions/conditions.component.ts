@@ -22,12 +22,12 @@ export class ConditionsComponent implements OnInit {
         this.windString = computed(() =>
             this.createWindString(
                 this.currentWeather()?.wind,
-                this.currentWeather()?.windDir
+                this.currentWeather()?.windDirection
             )
         );
 
         this.roundedTemperature = computed(() =>
-            this.createRoundedTemperature(this.currentWeather()?.temp)
+            this.createRoundedTemperature(this.currentWeather()?.temperature)
         );
 
         this.conditionIcon = computed(() =>

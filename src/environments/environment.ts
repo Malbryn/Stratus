@@ -4,7 +4,7 @@ export const environment = {
     production: true,
     mapboxApiKey: '<API_KEY>',
     weatherApiKey: '<API_KEY>',
-    weatherApiUrl: 'https://api.weatherapi.com/v1/',
+    weatherApiUrl: 'https://api.weatherapi.com/v1',
     rainViewerApiUrl: 'https://api.rainviewer.com/public/weather-maps.json',
     defaultLocation: {
         shortName: 'Budapest',
