@@ -3,52 +3,39 @@
         <h3>Forecast</h3>
     </div>
     <div class="flex justify-between px-5">
-        <div class="flex flex-col items-center gap-2">
+        <div
+            *ngFor="let forecastDay of forecastWeather()"
+            class="flex flex-col items-center gap-2"
+        >
             <div class="text-sm">
-                <p>Mon</p>
+                <p>{{ getDayOfWeek(forecastDay.date) }}</p>
             </div>
             <div>
                 <img
-                    ngSrc="../../../assets/icons/weather/partly-cloudy-1.svg"
+                    [ngSrc]="
+                        '../../../assets/icons/weather/' +
+                        getConditionIcon(forecastDay.day.condition.code) +
+                        '.svg'
+                    "
                     height="48"
                     width="48"
                 />
             </div>
-            <div class="text-sm">
-                <p>22 °C</p>
-                <p>5 mm</p>
-            </div>
-        </div>
-        <div class="flex flex-col items-center gap-2">
-            <div class="text-sm">
-                <p>Tue</p>
-            </div>
-            <div>
-                <img
-                    ngSrc="../../../assets/icons/weather/partly-cloudy-1.svg"
-                    height="48"
-                    width="48"
-                />
-            </div>
-            <div class="text-sm">
-                <p>25 °C</p>
-                <p>0 mm</p>
-            </div>
-        </div>
-        <div class="flex flex-col items-center gap-2">
-            <div class="text-sm">
-                <p>Wed</p>
-            </div>
-            <div>
-                <img
-                    ngSrc="../../../assets/icons/weather/partly-cloudy-1.svg"
-                    height="48"
-                    width="48"
-                />
-            </div>
-            <div class="text-sm">
-                <p>26 °C</p>
-                <p>0 mm</p>
+            <div class="flex flex-col text-center text-sm">
+                <p>
+                    {{ createRoundedTemperature(forecastDay.day.maxTemp) }} °C
+                </p>
+                <p>
+                    {{ createRoundedTemperature(forecastDay.day.minTemp) }} °C
+                </p>
+                <p>
+                    {{
+                        createRoundedTemperature(
+                            forecastDay.day.totalPrecipitation
+                        )
+                    }}
+                    mm
+                </p>
             </div>
         </div>
     </div>
