@@ -1,15 +1,8 @@
 export type WeatherAlert = {
-    headline: string;
-    type: string;
-    severity: string;
-    urgency: string;
-    areas: string;
-    category: string;
-    certainty: string;
+    senderName: string;
     event: string;
-    note: string;
-    effective: string;
-    expires: string;
+    start: number;
+    end: number;
     description: string;
-    instruction: string;
+    tags: string[];
 };

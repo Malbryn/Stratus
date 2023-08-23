@@ -12,6 +12,8 @@ import {
     ForecastHour,
     ForecastWeather,
 } from '../types/forecast-weather';
+import { AlertDto } from '../types/weather-alert-dto';
+import { WeatherAlert } from '../types/weather-alert';
 
 export class WeatherParserUtil {
     static parseWeatherData(weatherDto: WeatherDto): Weather {
@@ -19,6 +21,23 @@ export class WeatherParserUtil {
             current: WeatherParserUtil.parseCurrentWeatherData(weatherDto),
             forecast: WeatherParserUtil.parseForecastWeatherData(weatherDto),
         } as Weather;
+    }
+
+    static parseAlertData(weatherAlertDto: AlertDto[]): WeatherAlert[] {
+        const alerts: WeatherAlert[] = [];
+
+        weatherAlertDto.forEach((currentAlert) =>
+            alerts.push({
+                senderName: currentAlert.sender_name,
+                start: currentAlert.start,
+                end: currentAlert.end,
+                event: currentAlert.event,
+                description: currentAlert.description,
+                tags: currentAlert.tags,
+            })
+        );
+
+        return alerts;
     }
 
     private static parseCurrentWeatherData(

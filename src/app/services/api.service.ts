@@ -8,6 +8,8 @@ import { WeatherMapParserUtil } from '../utils/weather-map-parser.util';
 import { WeatherParserUtil } from '../utils/weather-parser.util';
 import { WeatherDto } from '../types/weather-dto';
 import { Weather } from '../types/weather';
+import { WeatherAlert } from '../types/weather-alert';
+import { WeatherAlertDto } from '../types/weather-alert-dto';
 
 @Injectable()
 export class ApiService {
@@ -25,6 +27,21 @@ export class ApiService {
             .pipe(
                 map((data: WeatherDto) =>
                     WeatherParserUtil.parseWeatherData(data)
+                )
+            );
+    }
+
+    getAlerts(location: {
+        latitude: number;
+        longitude: number;
+    }): Observable<WeatherAlert[]> {
+        const url: string = `${environment.openWeatherMapUrl}?lat=${location.latitude}&lon=${location.longitude}&exclude=minutely,hourly,daily&appid=${environment.openWeatherMapApiKey}`;
+
+        return this.httpClient
+            .get<WeatherAlertDto>(url)
+            .pipe(
+                map((data: WeatherAlertDto) =>
+                    WeatherParserUtil.parseAlertData(data.alerts)
                 )
             );
     }
