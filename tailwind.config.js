@@ -29,11 +29,13 @@ module.exports = {
                 48: '48px',
             },
             width: {
+                'px-8': '8px',
                 'px-128': '128px',
                 'px-256': '256px',
                 'px-386': '386px',
             },
             height: {
+                'px-8': '8px',
                 'px-54': '54px',
             },
             maxWidth: {

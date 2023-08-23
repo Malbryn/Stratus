@@ -2,21 +2,62 @@
     <div class="flex justify-center">
         <h3>Alerts</h3>
     </div>
-    <div class="flex items-center gap-6">
+    <div class="flex items-center justify-between gap-6">
         <div>
-            <img
-                class="stroke-yellow-400"
-                ngSrc="../../../assets/icons/weather/mix-rainfall-2.svg"
-                height="42"
-                width="42"
-            />
+            <button (click)="previousPage()">
+                <img
+                    ngSrc="../../../assets/icons/control/chevron_left.svg"
+                    height="24"
+                    width="24"
+                />
+            </button>
         </div>
-        <div class="flex flex-col">
-            <div>
-                <p>Thunderstorm</p>
+        <div
+            *ngFor="let alert of alerts(); index as itemIndex"
+            [className]="
+                itemIndex !== currentItemIndex() ? 'hidden' : 'visible'
+            "
+        >
+            <div class="flex items-center justify-between gap-6">
+                <div>
+                    <img
+                        class="stroke-yellow-400"
+                        ngSrc="../../../assets/icons/weather/mix-rainfall-2.svg"
+                        height="42"
+                        width="42"
+                    />
+                </div>
+                <div class="flex flex-col">
+                    <div>
+                        <p>{{ alert.event }}</p>
+                    </div>
+                    <div>
+                        <p class="text-xs">
+                            Valid until: {{ alert.end | date: 'short' }}
+                        </p>
+                    </div>
+                </div>
             </div>
-            <div>
-                <p>Valid until: 17/08 17:00</p>
+        </div>
+        <div>
+            <button (click)="nextPage()">
+                <img
+                    ngSrc="../../../assets/icons/control/chevron_right.svg"
+                    height="24"
+                    width="24"
+                />
+            </button>
+        </div>
+    </div>
+    <div class="flex justify-center">
+        <div class="flex gap-0.5">
+            <div *ngFor="let alert of alerts(); index as itemIndex">
+                <button
+                    class="h-px-8 w-px-8 rounded-full border-2 border-solid border-primary-700"
+                    [ngClass]="
+                        itemIndex === currentItemIndex() ? 'bg-primary-700' : ''
+                    "
+                ></button>
             </div>
         </div>
     </div>
