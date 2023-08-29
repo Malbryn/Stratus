@@ -1,0 +1,8 @@
+version: '3.9'
+services:
+    stratus:
+        image: ghcr.io/malbryn/stratus:1.0.0
+        container_name: stratus
+        ports:
+            - "80:80"
+        restart: unless-stopped
